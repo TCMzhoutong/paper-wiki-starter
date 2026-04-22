@@ -98,7 +98,7 @@ paper-wiki-starter/
 ## License
 
 - **代码**（`.sh`、`.py`、`.yaml`、`.json`）—— [MIT](LICENSE)
-- **内容**（提示词模板、skill 指令、文档）—— [CC-BY-NC-4.0](LICENSE-CONTENT)
+- **内容**（提示词模板、skill 指令、文档）—— [CC-BY-NC-4.0](docs/content-licensing.md)
 
 提示词模板的商业使用需另行授权。非商业的学术、个人、科研用途无需额外许可。
 

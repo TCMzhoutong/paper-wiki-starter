@@ -98,7 +98,7 @@ Details for each workflow — intent detection, block assembly, validation gates
 ## License
 
 - **Code** (`.sh`, `.py`, `.yaml`, `.json`) — [MIT](LICENSE)
-- **Content** (prompt templates, skill instructions, documentation prose) — [CC-BY-NC-4.0](LICENSE-CONTENT)
+- **Content** (prompt templates, skill instructions, documentation prose) — [CC-BY-NC-4.0](docs/content-licensing.md)
 
 Commercial use of the prompt templates requires separate licensing. Non-commercial academic, personal, and research use is explicitly permitted.
 
