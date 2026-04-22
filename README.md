@@ -73,6 +73,7 @@ paper-wiki-starter/
 │   ├── bootstrap.sh           ← one-shot deploy
 │   ├── install-skills.sh      ← Claude skills + CLI wrappers
 │   ├── check-env.sh           ← status report
+│   ├── batch-read.sh          ← headless bulk paper-card generation
 │   └── concept-audit.py       ← wiki health check
 ├── skills/                    ← first-party Claude skills (shipped)
 │   ├── paper-report/
@@ -94,6 +95,19 @@ paper-wiki-starter/
 | **Experiment plan** | "baseline for X", "/experiment X" | `wiki/experiments/<slug>_<date>.md` |
 
 Details for each workflow — intent detection, block assembly, validation gates — live inside the respective skill's `SKILL.md`.
+
+### Bulk paper reading
+
+For ingesting tens or hundreds of papers at once without bloating a single Claude Code session's context:
+
+```bash
+./add-paper.sh                 # MinerU-convert all PDFs in raw/pdf/
+./scripts/batch-read.sh        # headless loop: one `claude -p` per paper
+```
+
+Run this from a **regular terminal** (PowerShell / Git Bash), not from inside an interactive Claude Code session. Each paper runs in its own fresh Claude context — no carry-over, no bloat. The script is idempotent (skips papers whose cards already exist) and safe to Ctrl-C and resume. Progress is streamed to `batch-read.log`.
+
+After the batch finishes, ask Claude Code once to run the **校验维护流程** (concept health audit). This dedupes concepts and resolves alias conflicts across the whole batch in a single pass — the designed-in "cleanup stage" that keeps bulk mode fast.
 
 ## License
 

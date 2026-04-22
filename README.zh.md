@@ -73,6 +73,7 @@ paper-wiki-starter/
 │   ├── bootstrap.sh           ← 一键部署
 │   ├── install-skills.sh      ← Claude skill + CLI 装载
 │   ├── check-env.sh           ← 环境状态检查
+│   ├── batch-read.sh          ← 批量精读（headless，一篇一个 claude -p）
 │   └── concept-audit.py       ← wiki 健康检查
 ├── skills/                    ← 第一方 Claude skill（随仓库发布）
 │   ├── paper-report/
@@ -94,6 +95,19 @@ paper-wiki-starter/
 | **实验方案** | "X 的 baseline 怎么设计"、"/experiment X" | `wiki/experiments/<短标题>_<日期>.md` |
 
 每个工作流的详细规则（意图识别、积木装配、校验闸门）在各自 skill 的 `SKILL.md` 里。
+
+### 批量精读
+
+一次性导入几十到上百篇论文时，避免单个 Claude Code 会话上下文膨胀：
+
+```bash
+./add-paper.sh                 # MinerU 批量转换 raw/pdf/ 下所有 PDF
+./scripts/batch-read.sh        # headless 循环：每篇论文独立 claude -p
+```
+
+在**普通终端**（PowerShell / Git Bash）里跑，不要在交互式 Claude Code 会话里跑。每篇论文都在独立的 Claude 上下文里处理——不累积、不膨胀。脚本幂等（已有卡片自动跳过），可以 Ctrl-C 中断后重跑。进度日志写入 `batch-read.log`。
+
+批处理结束后，在 Claude Code 里跑一次**校验维护流程**（概念健康审计）。整批积累下来的概念重复 / alias 冲突会在这一遍里统一消融——这是刻意设计的"清账阶段"，正是它让批处理能跑得快。
 
 ## License
 
