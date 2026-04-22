@@ -1,0 +1,28 @@
+paper-wiki-starter — Licensing Notice
+======================================
+
+This repository uses dual licensing. Read both to understand what is
+permitted:
+
+  Code — shell scripts, Python, YAML, JSON
+    → MIT License
+    → See: LICENSE
+
+  Prose, prompt templates, skill instructions, documentation
+    (schema/prompts/**, skills/**/*.md, and *.md at the repo root)
+    → Creative Commons Attribution-NonCommercial 4.0 International
+      (CC BY-NC 4.0)
+    → See: docs/content-licensing.md
+
+Rule of thumb
+-------------
+  - Anything executable or machine-readable  → MIT
+  - Anything a human reads for meaning       → CC BY-NC 4.0
+
+Commercial licensing inquiries
+------------------------------
+The NonCommercial restriction on prompt templates and skill instructions
+does not prohibit their use in academic research, teaching, personal
+scholarship, or non-profit settings. If you want to include this content
+in a paid product, SaaS offering, or commercial training course, please
+open an issue on the project repository to discuss terms.
