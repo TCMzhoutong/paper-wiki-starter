@@ -1,0 +1,116 @@
+# paper-wiki-starter — pinned dependency manifest
+# ------------------------------------------------------------------
+# Machine-readable spec consumed by scripts/install-skills.sh.
+# Human-readable version: DEPENDENCIES.md
+#
+# Versioning policy:
+#   - `commit: main`  means "track upstream main" (accept drift)
+#   - `commit: <sha>` means "pin to this exact commit" (reproducible)
+#
+# First-party skills ship inside this repo under skills/.
+# Upstream skills and CLI tools are installed from canonical sources.
+# ------------------------------------------------------------------
+
+schema_version: 1
+
+first_party_skills:
+  - name: paper-report
+    path: skills/paper-report
+    license: MIT
+    description: Cross-paper synthesis — writes reports to wiki/reports/
+
+  - name: paper-idea
+    path: skills/paper-idea
+    license: MIT
+    depends_on: [paper-report]
+    description: Idea scouting — writes cards to wiki/ideas/
+
+  - name: paper-experiment
+    path: skills/paper-experiment
+    license: MIT
+    depends_on: [paper-report]
+    description: Experiment planning — writes cards to wiki/experiments/
+
+upstream_skills:
+  - name: notebooklm
+    repo: https://github.com/teng-lin/notebooklm-py
+    commit: main
+    license: MIT
+    install_method: pip+self-install
+    install_commands:
+      - pip install "notebooklm-py[browser]"
+      - notebooklm skill install
+    post_install_manual:
+      - "Run 'notebooklm login' to complete Google OAuth (browser opens)"
+    required_by: [paper-report]
+
+  - name: obsidian-cli
+    repo: https://github.com/kepano/obsidian-skills
+    commit: main
+    license: MIT
+    install_method: npx-bundle
+    install_commands:
+      - npx skills add git@github.com:kepano/obsidian-skills.git
+    notes: |
+      This is a multi-skill bundle. Installing it also brings obsidian-markdown,
+      obsidian-bases, defuddle, and json-canvas. That is intended — the bundle
+      author treats them as a single distribution.
+    required_by: [paper-report]
+
+cli_tools:
+  - name: mineru
+    repo: https://github.com/opendatalab/MinerU
+    install_method: conda-env
+    install_commands:
+      - conda create -n mineru python=3.12 -y
+      - conda run -n mineru pip install uv
+      - conda run -n mineru uv pip install -U "mineru[all]"
+    post_install_manual:
+      - "Optional: install CUDA PyTorch — conda run -n mineru pip install torch torchvision --force-reinstall --index-url https://download.pytorch.org/whl/cu128"
+      - "Copy mineru.json to $HOME/ if using title-aided conversion"
+    license: AGPL-3.0
+    license_notes: "Verify upstream LICENSE before commercial redistribution"
+    required_by: [add-paper.sh]
+
+  - name: qmd
+    repo: https://github.com/opendatalab/MinerU-Document-Explorer
+    install_method: npm-global
+    install_commands:
+      - npm install -g mineru-document-explorer
+    post_install_manual:
+      - "First run auto-downloads ~2 GB of models (embedding-gemma, qwen3-reranker, qmd-query-expansion)"
+    license: MIT
+    required_by: [paper-report, paper-idea, paper-experiment, add-paper.sh]
+
+  - name: endnote-cli
+    repo: https://github.com/TCMzhoutong/endnote-cli
+    install_method: pip
+    install_commands:
+      - pip install "endnote-cli[all]"
+    license: Apache-2.0
+    required_by: [new-paper-workflow]
+    notes: "Only required if you use the EndNote metadata-extraction step in the new-paper workflow."
+
+  - name: ollama
+    repo: https://ollama.com/
+    install_method: manual
+    install_commands: []
+    post_install_manual:
+      - "Install Ollama from https://ollama.com/download"
+      - "ollama pull gemma4  # optional, for MinerU title-aided conversion"
+    license: MIT
+    required_by: []
+    notes: "Optional runtime for MinerU's local LLM-aided title recognition."
+
+runtime_dependencies:
+  - name: obsidian
+    url: https://obsidian.md/
+    license: Proprietary (free for personal use)
+    role: "GUI vault browser (manual install)"
+  - name: conda
+    url: https://docs.conda.io/
+    license: BSD-3-Clause
+  - name: nodejs
+    url: https://nodejs.org/
+    min_version: "22"
+    license: MIT

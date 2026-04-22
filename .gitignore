@@ -1,0 +1,60 @@
+# ============================================================
+# Content protection — never commit user-generated knowledge
+# ============================================================
+
+# Wiki pages (user's notes — not part of the framework)
+wiki/**/*.md
+!wiki/**/.gitkeep
+!wiki/README.md
+
+# Source PDFs and MinerU output (copyright-protected paper content)
+raw/pdf/*
+raw/md/*
+!raw/**/.gitkeep
+!raw/**/README.md
+
+# Paper drafting workspace
+papers-draft/
+
+# qmd-generated indexes (derived from content)
+scripts/concept-index.json
+**/qmd-index/
+.qmd/
+
+# ============================================================
+# Local config — machine-specific, may contain secrets/paths
+# ============================================================
+
+.claude/settings.local.json
+.obsidian/workspace.json
+.obsidian/workspace*.json
+.obsidian/plugins/
+.obsidian/themes/
+.obsidian/snippets/
+.obsidian/hotkeys.json
+
+# ============================================================
+# Tool artifacts
+# ============================================================
+
+# MinerU temp output
+mineru_tmp_output/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Node
+node_modules/
+package-lock.json
+bun.lockb
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
