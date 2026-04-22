@@ -40,6 +40,9 @@ scripts/concept-index.json
 # MinerU temp output
 mineru_tmp_output/
 
+# batch-read.sh output log
+batch-read.log
+
 # Python
 __pycache__/
 *.py[cod]
